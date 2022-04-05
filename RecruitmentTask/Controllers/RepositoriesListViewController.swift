@@ -36,7 +36,7 @@ class RepositoriesListViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .apBackground
         collectionView.register(RepositoriesListCell.self, forCellWithReuseIdentifier: RepositoriesListCell.cellId)
         collectionView.register(CollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CollectionReusableView.identifier)
         collectionView.showsHorizontalScrollIndicator = false
@@ -52,16 +52,18 @@ class RepositoriesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .apBackground
         
         /// Styling searchController && SearchBar
         searchController.searchBar.placeholder = "Search Repositories..."
         searchController.searchBar.searchTextField.backgroundColor = .clear
+        searchController.searchBar.tintColor = .apTintColor
         searchController.searchBar.delegate = self
 
         ///
         navigationItem.searchController = searchController
         navigationItem.title = viewModel.title
+        navigationItem.titleView?.tintColor = .apTintColor
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationController?.navigationBar.prefersLargeTitles = true
 

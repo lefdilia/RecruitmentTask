@@ -64,7 +64,7 @@ class RepositoriesListCell: UICollectionViewCell {
     
     let customAccessory: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "chevron.right")?.withTintColor(.gray).withRenderingMode(.alwaysOriginal)
+        imageView.image = UIImage(systemName: "chevron.right")?.withTintColor(.apGray).withRenderingMode(.alwaysOriginal)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()

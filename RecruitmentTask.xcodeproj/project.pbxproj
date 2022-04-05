@@ -20,6 +20,7 @@
 		8A568D6C27FC8E8A000E44FD /* RepositoriesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D6B27FC8E8A000E44FD /* RepositoriesListCell.swift */; };
 		8A568D6F27FC8FDC000E44FD /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D6E27FC8FDC000E44FD /* RepositoryModel.swift */; };
 		8A568D7127FC99B8000E44FD /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */; };
+		8A568D7327FCACFF000E44FD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A568D7227FCACFF000E44FD /* Colors.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		8A568D6B27FC8E8A000E44FD /* RepositoriesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesListCell.swift; sourceTree = "<group>"; };
 		8A568D6E27FC8FDC000E44FD /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
+		8A568D7227FCACFF000E44FD /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +121,7 @@
 		8A568D6627FC894F000E44FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8A568D7227FCACFF000E44FD /* Colors.xcassets */,
 				8A568D4D27FC81A0000E44FD /* Assets.xcassets */,
 				8A568D4427FC819F000E44FD /* AppDelegate.swift */,
 				8A568D4627FC819F000E44FD /* SceneDelegate.swift */,
@@ -210,6 +213,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A568D7327FCACFF000E44FD /* Colors.xcassets in Resources */,
 				8A568D5127FC81A0000E44FD /* LaunchScreen.storyboard in Resources */,
 				8A568D4E27FC81A0000E44FD /* Assets.xcassets in Resources */,
 			);

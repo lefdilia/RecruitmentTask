@@ -17,7 +17,7 @@ class CollectionReusableView: UICollectionReusableView {
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 0
         label.attributedText = NSAttributedString(string: "Repositories", attributes: [
-            .font:UIFont.systemFont(ofSize: 22, weight: .bold), .foregroundColor: UIColor.black])
+            .font:UIFont.systemFont(ofSize: 22, weight: .bold), .foregroundColor: UIColor.apTintColor])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
