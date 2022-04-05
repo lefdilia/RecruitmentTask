@@ -20,15 +20,14 @@ final class AppCoordinator: Coordinator {
     private(set) var childCoordinators: [Coordinator] = []
     private let window: UIWindow
     
-    
     init(window: UIWindow){
         self.window = window
     }
     
     func start() {
         let navigationController = UINavigationController()
-        
-        let repositoriesListCoordinator = RepositoriesListCoordinator(navigationController: navigationController)
+        //TEST
+        let repositoriesListCoordinator = RepositoryDetailsCoordinator(navigationController: navigationController)
         childCoordinators.append(repositoriesListCoordinator)
         repositoriesListCoordinator.start()
         

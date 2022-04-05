@@ -137,5 +137,11 @@ extension RepositoriesListViewController: UICollectionViewDelegate, UICollection
         return cell
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+//        let repository = repositories[indexPath.item]
+
+        viewModel.didSelectRepository()
+        
+    }
 }

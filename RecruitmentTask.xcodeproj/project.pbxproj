@@ -21,6 +21,11 @@
 		8A568D6F27FC8FDC000E44FD /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D6E27FC8FDC000E44FD /* RepositoryModel.swift */; };
 		8A568D7127FC99B8000E44FD /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */; };
 		8A568D7327FCACFF000E44FD /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A568D7227FCACFF000E44FD /* Colors.xcassets */; };
+		8A568D7527FCAFF0000E44FD /* RepositoryDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7427FCAFF0000E44FD /* RepositoryDetailsCoordinator.swift */; };
+		8A568D7727FCB067000E44FD /* RepositoryDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7627FCB067000E44FD /* RepositoryDetailsViewController.swift */; };
+		8A568D7927FCB0B1000E44FD /* RepositoryDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7827FCB0B1000E44FD /* RepositoryDetailsViewModel.swift */; };
+		8A568D7B27FCCFEC000E44FD /* CommitsHistoryListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7A27FCCFEC000E44FD /* CommitsHistoryListCell.swift */; };
+		8A568D7D27FCD10A000E44FD /* CommitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D7C27FCD10A000E44FD /* CommitsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		8A568D6E27FC8FDC000E44FD /* RepositoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryModel.swift; sourceTree = "<group>"; };
 		8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
 		8A568D7227FCACFF000E44FD /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		8A568D7427FCAFF0000E44FD /* RepositoryDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsCoordinator.swift; sourceTree = "<group>"; };
+		8A568D7627FCB067000E44FD /* RepositoryDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsViewController.swift; sourceTree = "<group>"; };
+		8A568D7827FCB0B1000E44FD /* RepositoryDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryDetailsViewModel.swift; sourceTree = "<group>"; };
+		8A568D7A27FCCFEC000E44FD /* CommitsHistoryListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsHistoryListCell.swift; sourceTree = "<group>"; };
+		8A568D7C27FCD10A000E44FD /* CommitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +85,9 @@
 				8A568D6D27FC8FCB000E44FD /* Models */,
 				8A568D6727FC8A6C000E44FD /* Extensions */,
 				8A568D6327FC8910000E44FD /* Managers */,
+				8A568D6A27FC8E74000E44FD /* Views */,
 				8A568D5A27FC8480000E44FD /* ViewModels */,
 				8A568D5927FC847B000E44FD /* Controllers */,
-				8A568D6A27FC8E74000E44FD /* Views */,
 				8A568D5827FC8472000E44FD /* Coordinators */,
 				8A568D6627FC894F000E44FD /* Resources */,
 				8A568D5227FC81A0000E44FD /* Info.plist */,
@@ -90,6 +100,7 @@
 			children = (
 				8A568D5B27FC84AD000E44FD /* AppCoordinator.swift */,
 				8A568D5D27FC85DF000E44FD /* RepositoriesListCoordinator.swift */,
+				8A568D7427FCAFF0000E44FD /* RepositoryDetailsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -98,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				8A568D5F27FC8689000E44FD /* RepositoriesListViewController.swift */,
+				8A568D7627FCB067000E44FD /* RepositoryDetailsViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -106,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				8A568D6127FC8707000E44FD /* RepositoriesListViewModel.swift */,
+				8A568D7827FCB0B1000E44FD /* RepositoryDetailsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -143,6 +156,7 @@
 				8A568D4F27FC81A0000E44FD /* LaunchScreen.storyboard */,
 				8A568D6B27FC8E8A000E44FD /* RepositoriesListCell.swift */,
 				8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */,
+				8A568D7A27FCCFEC000E44FD /* CommitsHistoryListCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -151,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				8A568D6E27FC8FDC000E44FD /* RepositoryModel.swift */,
+				8A568D7C27FCD10A000E44FD /* CommitsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -226,15 +241,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A568D7B27FCCFEC000E44FD /* CommitsHistoryListCell.swift in Sources */,
+				8A568D7927FCB0B1000E44FD /* RepositoryDetailsViewModel.swift in Sources */,
 				8A568D6C27FC8E8A000E44FD /* RepositoriesListCell.swift in Sources */,
 				8A568D7127FC99B8000E44FD /* CollectionReusableView.swift in Sources */,
 				8A568D6F27FC8FDC000E44FD /* RepositoryModel.swift in Sources */,
+				8A568D7527FCAFF0000E44FD /* RepositoryDetailsCoordinator.swift in Sources */,
 				8A568D6527FC8929000E44FD /* APIManager.swift in Sources */,
 				8A568D6227FC8707000E44FD /* RepositoriesListViewModel.swift in Sources */,
 				8A568D6027FC8689000E44FD /* RepositoriesListViewController.swift in Sources */,
 				8A568D5C27FC84AD000E44FD /* AppCoordinator.swift in Sources */,
+				8A568D7D27FCD10A000E44FD /* CommitsModel.swift in Sources */,
 				8A568D4527FC819F000E44FD /* AppDelegate.swift in Sources */,
 				8A568D5E27FC85DF000E44FD /* RepositoriesListCoordinator.swift in Sources */,
+				8A568D7727FCB067000E44FD /* RepositoryDetailsViewController.swift in Sources */,
 				8A568D4727FC819F000E44FD /* SceneDelegate.swift in Sources */,
 				8A568D6927FC8A8B000E44FD /* UIColor+Extension.swift in Sources */,
 			);

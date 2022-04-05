@@ -25,6 +25,15 @@ final class RepositoriesListCoordinator: Coordinator {
         navigationController.setViewControllers([repositoriesListViewController], animated: false)
     }
     
+    func selectRepository(){
+        
+        let repositoryDetailsCoordinator = RepositoryDetailsCoordinator(navigationController: navigationController)
+        repositoryDetailsCoordinator.parentCoordinator = self
+        childCoordinators.append(repositoryDetailsCoordinator)
+        repositoryDetailsCoordinator.start()
+        
+    }
+    
 }
 
 

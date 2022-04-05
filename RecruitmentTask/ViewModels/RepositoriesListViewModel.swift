@@ -10,6 +10,11 @@ import Foundation
 final class RepositoriesListViewModel {
     
     var coordinator: RepositoriesListCoordinator?
-    let title = "Search"
+    let title = "--"
+
     
+    func didSelectRepository(){
+        coordinator?.selectRepository()
+    }
+
 }

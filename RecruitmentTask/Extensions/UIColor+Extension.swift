@@ -17,5 +17,8 @@ extension UIColor {
     static let cellBackground = UIColor(named: "cellBackground")!
     static let warmGrey = UIColor(named: "warmGrey")!
     static let apGray = UIColor(named: "apGray")!
+    static let blueAzure = UIColor(named: "blueAzure")!
+    
+    static let buttonColor = UIColor(named: "buttonColor")!
 
 }
