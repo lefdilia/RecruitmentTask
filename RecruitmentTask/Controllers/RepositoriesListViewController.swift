@@ -14,6 +14,10 @@ class RepositoriesListViewController: UIViewController {
     var viewModel: RepositoriesListViewModel!
     var repositories: [Repositories] = []
     
+    //SearchRelated
+    var page = 1
+    var moreRepos = true
+
     lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.backgroundColor = .apTintColor.withAlphaComponent(0.4)
@@ -86,9 +90,13 @@ class RepositoriesListViewController: UIViewController {
                 return
             }
             
+            if repositories.count < 100 {
+               self?.moreRepos = false
+            }
+            
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                self?.repositories = repositories
+                self?.repositories.append(contentsOf: repositories)
                 self?.repositoriesListView.reloadData()
             }
         }
@@ -158,4 +166,19 @@ extension RepositoriesListViewController: UICollectionViewDelegate, UICollection
         viewModel.didSelectRepository(repository)
         
     }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+
+        if offsetY > contentHeight - height {
+            guard  let searchText = searchController.searchBar.text, moreRepos == true else { return }
+            page += 1
+            self.activityIndicator.startAnimating()
+            self.viewModel.fetchRepositories(keyword: searchText, page: page)
+        }
+    }
+
 }
