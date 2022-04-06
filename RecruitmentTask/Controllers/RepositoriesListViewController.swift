@@ -96,7 +96,13 @@ class RepositoriesListViewController: UIViewController {
             
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                self?.repositories.append(contentsOf: repositories)
+                
+                if repositories.count > 100 {
+                    self?.repositories.append(contentsOf: repositories)
+                }else{
+                    self?.repositories = repositories
+                }
+                
                 self?.repositoriesListView.reloadData()
             }
         }
@@ -114,15 +120,9 @@ extension RepositoriesListViewController: UISearchBarDelegate {
         })
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        activityIndicator.stopAnimating()
-    }
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
-        activityIndicator.stopAnimating()
         searchBar.endEditing(true)
     }
-    
 }
 
 
