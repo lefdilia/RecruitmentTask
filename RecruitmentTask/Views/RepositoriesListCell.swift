@@ -10,7 +10,7 @@ import UIKit
 
 class RepositoriesListCell: UICollectionViewCell {
     
-    var repository: RepositoryModel? {
+    var repository: Repositories? {
         didSet{
             
             guard let repository = repository else {
@@ -18,10 +18,12 @@ class RepositoriesListCell: UICollectionViewCell {
             }
             
             ///Owner Image
-            ownerPicture.image = UIImage(named: repository.ownerPicture)
+            if let url = URL(string: repository.owner.avatarURL) {
+                ownerPicture.load(url: url)
+            }
             
             ///Repository Title
-            repositoryTitleLabel.attributedText = NSAttributedString(string: repository.repositoryName, attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold) ])
+            repositoryTitleLabel.attributedText = NSAttributedString(string: repository.owner.login.capitalized, attributes: [.font: UIFont.systemFont(ofSize: 17, weight: .semibold) ])
             
             ///Stars
             let attributedText = NSMutableAttributedString(string: "")

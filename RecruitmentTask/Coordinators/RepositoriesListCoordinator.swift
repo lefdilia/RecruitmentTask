@@ -25,13 +25,21 @@ final class RepositoriesListCoordinator: Coordinator {
         navigationController.setViewControllers([repositoriesListViewController], animated: false)
     }
     
-    func selectRepository(){
-        
-        let repositoryDetailsCoordinator = RepositoryDetailsCoordinator(navigationController: navigationController)
+    func selectRepository(_ repository: Repositories){
+        let repositoryDetailsCoordinator = RepositoryDetailsCoordinator(
+            repository: repository,
+            navigationController: navigationController)
         repositoryDetailsCoordinator.parentCoordinator = self
         childCoordinators.append(repositoryDetailsCoordinator)
         repositoryDetailsCoordinator.start()
-        
+    }
+    
+    func childDidFinish(_ childCoordinator: Coordinator){
+        if let index = childCoordinators.firstIndex(where: { coordinator in
+            return childCoordinator === coordinator
+        }) {
+            childCoordinators.remove(at: index)
+        }
     }
     
 }

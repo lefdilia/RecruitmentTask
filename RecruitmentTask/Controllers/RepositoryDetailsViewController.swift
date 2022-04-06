@@ -12,13 +12,7 @@ class RepositoryDetailsViewController: UIViewController {
     
     var viewModel: RepositoryDetailsViewModel!
     
-    var commits: [CommitsModel] = [
-        CommitsModel(authorName: "lefdilia", email: "lefdilia@gmail.com", message: "This is a commit message that needs to fold over to the next line."),
-        CommitsModel(authorName: "lefdilia", email: "lefdilia@gmail.com", message: "This is a commit message that needs to fold over to the next line."),
-        CommitsModel(authorName: "lefdilia", email: "lefdilia@gmail.com", message: "This is a commit message that needs to fold over to the next line."),
-    ]
-    
-    var repository: RepositoryModel?
+    var commits: [CommitsHistory] = []
 
     let topContainer: UIView = {
         let containerView = UIView()
@@ -48,10 +42,6 @@ class RepositoryDetailsViewController: UIViewController {
         let label = UILabel()
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
-        label.attributedText = NSAttributedString(string: "Repo Author Name", attributes: [
-            .font: UIFont.systemFont(ofSize: 28, weight: .bold),
-            .foregroundColor: UIColor.white
-        ])
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -64,7 +54,6 @@ class RepositoryDetailsViewController: UIViewController {
         return label
     }()
 
-
     lazy var CommitsHistoryList: UITableView = {
         let table = UITableView()
         table.register(CommitsHistoryListCell.self, forCellReuseIdentifier: CommitsHistoryListCell.cellId)
@@ -73,6 +62,10 @@ class RepositoryDetailsViewController: UIViewController {
         table.dataSource = self
         table.showsVerticalScrollIndicator = false
         table.backgroundColor = .apBackground
+        
+        table.estimatedRowHeight = 110
+        table.rowHeight = UITableView.automaticDimension
+        
         table.separatorStyle = .singleLine
         table.separatorInset = .zero
         table.layoutMargins = .zero
@@ -80,6 +73,23 @@ class RepositoryDetailsViewController: UIViewController {
         return table
     }()
     
+    let headerLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let topTitleLabel: UILabel = {
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(string: "Commits History", attributes: [
+            .font : UIFont.systemFont(ofSize: 22, weight: .bold),
+            .foregroundColor : UIColor.apTintColor ])
+        label.attributedText = attributedText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     //MARK: - FooterView
     let footerView: UIView = {
@@ -118,23 +128,6 @@ class RepositoryDetailsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        ///
-        let attributedText = NSMutableAttributedString(string: "")
-        let icon = NSTextAttachment()
-        icon.image = UIImage(named: "starIcon")?.withTintColor(.warmGrey).withRenderingMode(.alwaysOriginal)
-        icon.bounds = CGRect(x: 0, y: -1, width: icon.image!.size.width, height: icon.image!.size.width )
-        let attachement = NSAttributedString(attachment: icon)
-        attributedText.append(attachement)
-        attributedText.append(NSAttributedString(string: " "))
-        attributedText.append(NSAttributedString(string: "Number of Stars (234)", attributes: [
-            .font: UIFont.systemFont(ofSize: 13, weight: .regular),
-            .foregroundColor: UIColor.white ]))
-        starsLabel.attributedText = attributedText
-        ///
-        DispatchQueue.main.async {
-            self.topImageView.image = UIImage(named: "gravatar-user-420")
-        }
-
         //MARK: - Table Footer View
         CommitsHistoryList.tableFooterView = footerView
         CommitsHistoryList.tableFooterView?.frame.size.height = 70
@@ -147,16 +140,26 @@ class RepositoryDetailsViewController: UIViewController {
             shareRepoButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor),
         ])
         
+        CommitsHistoryList.estimatedRowHeight = 150
+        CommitsHistoryList.rowHeight = UITableView.automaticDimension
+        
         CommitsHistoryList.layoutIfNeeded()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        guard let repository = viewModel.repository else {
+            return
+        }
+        
+        viewModel.fetchCommits(repository: repository)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .apBackground
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", image: UIImage(systemName: "chevron.backward")?.withTintColor(.white).withRenderingMode(.alwaysOriginal), primaryAction: .none, menu: .none)
-        
+    
         view.addSubview(topContainer)
         topContainer.addSubview(topImageView)
         topContainer.addSubview(smallTitleLabel)
@@ -196,14 +199,77 @@ class RepositoryDetailsViewController: UIViewController {
 
         ])
         
+        viewModel.onUpdate = { [weak self] in
+
+            guard let commits = self?.viewModel.commits, let repository = self?.viewModel.repository else {
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    let owner = self?.viewModel.repository?.owner.login
+                    let stars = self?.viewModel.repository?.stars
+                    
+                    ///Repo Name
+                    self?.ownerNameLabel.attributedText = NSAttributedString(string: owner?.capitalized ?? "", attributes: [
+                        .font: UIFont.systemFont(ofSize: 28, weight: .bold),
+                        .foregroundColor: UIColor.white
+                    ])
+                    ///
+                    ///
+                    let attributedText = NSMutableAttributedString(string: "")
+                    let icon = NSTextAttachment()
+                    icon.image = UIImage(named: "starIcon")?.withTintColor(.warmGrey).withRenderingMode(.alwaysOriginal)
+                    icon.bounds = CGRect(x: 0, y: -1, width: icon.image!.size.width, height: icon.image!.size.width )
+                    let attachement = NSAttributedString(attachment: icon)
+                    attributedText.append(attachement)
+                    attributedText.append(NSAttributedString(string: " "))
+                    attributedText.append(NSAttributedString(string: "Number of Stars (\(stars ?? 0))", attributes: [
+                        .font: UIFont.systemFont(ofSize: 13, weight: .regular),
+                        .foregroundColor: UIColor.white ]))
+                    self?.starsLabel.attributedText = attributedText
+                    ///
+                                      
+                    ///Owner Image
+                    if let url = URL(string: repository.owner.avatarURL) {
+                        self?.topImageView.load(url: url, placeholder: UIImage(named: "avatar-placeholder"))
+                    }
+                    
+                    ///Repo Title
+                    if let title = self?.viewModel.repository?.name {
+                        let attributedText = NSMutableAttributedString(string: title.capitalized, attributes: [
+                        .font : UIFont.systemFont(ofSize: 17, weight: .semibold),
+                        .foregroundColor : UIColor.apTintColor ])
+                        self?.headerLabel.attributedText = attributedText
+                    }
+
+                    self?.commits = commits
+                    self?.CommitsHistoryList.reloadData()
+                }
+            }
+        
+        //Update Back Button
+        let button = UIButton(type: .system)
+        var config = UIButton.Configuration.plain()
+        config.buttonSize = .large
+        config.title = "Back"
+        config.baseForegroundColor = .white
+        config.image = UIImage(systemName: "chevron.left", withConfiguration: UIImage.SymbolConfiguration(scale: .medium))
+        config.imagePadding = 5
+        button.configuration = config
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
+        button.sizeToFit()
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: button)
     }
+
+    
+    
 }
 
 extension RepositoryDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -217,26 +283,7 @@ extension RepositoryDetailsViewController: UITableViewDelegate, UITableViewDataS
             _view.backgroundColor = .apBackground
             return _view
         }()
-        
-        let headerLabel: UILabel = {
-            let label = UILabel()
-            let attributedText = NSMutableAttributedString(string: "Repo Title", attributes: [
-                .font : UIFont.systemFont(ofSize: 17, weight: .semibold),
-                .foregroundColor : UIColor.apTintColor ])
-            label.attributedText = attributedText
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
-        
-        let topTitleLabel: UILabel = {
-            let label = UILabel()
-            let attributedText = NSMutableAttributedString(string: "Commits History", attributes: [
-                .font : UIFont.systemFont(ofSize: 22, weight: .bold),
-                .foregroundColor : UIColor.apTintColor ])
-            label.attributedText = attributedText
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
+
 
         let viewOnlineButton: UIButton = {
             let button = UIButton(type: .custom)
@@ -289,10 +336,10 @@ extension RepositoryDetailsViewController: UITableViewDelegate, UITableViewDataS
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CommitsHistoryListCell.cellId, for: indexPath) as! CommitsHistoryListCell
         
-        cell.commit = commits[indexPath.row]
+        cell.commitHistory = commits[indexPath.row]
 
         if indexPath.row == commits.count-1 {
-            cell.separatorInset.right = cell.bounds.size.width
+            cell.separatorInset.left = cell.frame.width*2
         }
         
         cell.tag = indexPath.row
@@ -303,15 +350,42 @@ extension RepositoryDetailsViewController: UITableViewDelegate, UITableViewDataS
     //MARK: - Checkout
     
     @objc func didTapviewOnlineButton(){
-        print("Tapped viewOnlineButton..")
+        guard let repository = self.viewModel.repository, let htmlUrl = URL(string: repository.htmlUrl) else {
+            return
+        }
+        
+        UIApplication.shared.open(htmlUrl)
     }
     
     @objc func didTapviewShareRepoButton(){
-        print("Tapped ShareRepoButton..")
+        
+        guard let repository = self.viewModel.repository, let htmlUrl = URL(string: repository.htmlUrl) else {
+            return
+        }
+        
+        let activityViewController = UIActivityViewController(activityItems: [htmlUrl], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [.airDrop]
+        
+        DispatchQueue.main.async {
+            if let popoverController = activityViewController.popoverPresentationController {
+                popoverController.sourceRect = CGRect(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2, width: 0, height: 0)
+                popoverController.sourceView = self.view
+                popoverController.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            }
+            
+            activityViewController.completionWithItemsHandler = { activity, success, items, error in
+                UINavigationBar.appearance().tintColor = .white
+                activityViewController.dismiss(animated: true)
+            }
+            
+            self.present(activityViewController, animated: true) {() -> Void in
+                UINavigationBar.appearance().tintColor = .darkGray
+            }
+        }
     }
     
     @objc func didTapBackButton(){
-        print("Tap Back Button")
+        viewModel.didFinish()
     }
     
 

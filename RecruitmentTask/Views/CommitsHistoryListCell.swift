@@ -23,23 +23,25 @@ class CommitsHistoryListCell: UITableViewCell {
         }
     }
     
-    var commit: CommitsModel? {
+    var commitHistory: CommitsHistory? {
         didSet{
             
-            guard let commit = commit else { return }
+            guard let commitHistory = commitHistory else { return }
             
-            commitAuthorLabel.attributedText = NSAttributedString(string: commit.authorName,
+            let author = commitHistory.commit.author
+            
+            commitAuthorLabel.attributedText = NSAttributedString(string: author.name,
                                  attributes: [
                                     .font: UIFont.systemFont(ofSize: 11, weight: .semibold),
                                     .foregroundColor: UIColor.blueAzure
                                  ])
             
-            commitEmailLabel.attributedText = NSAttributedString(string: commit.email,
+            commitEmailLabel.attributedText = NSAttributedString(string: author.email,
                                  attributes: [
                                     .font: UIFont.systemFont(ofSize: 17, weight: .regular),
                                     .foregroundColor: UIColor.apTintColor
                                  ])
-            commitMessageLabel.attributedText = NSAttributedString(string: commit.message,
+            commitMessageLabel.attributedText = NSAttributedString(string: commitHistory.commit.message,
                                  attributes: [
                                     .font: UIFont.systemFont(ofSize: 17, weight: .regular),
                                     .foregroundColor: UIColor.warmGrey
@@ -55,6 +57,7 @@ class CommitsHistoryListCell: UITableViewCell {
         label.textAlignment = .center
         label.layer.masksToBounds = true
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -62,6 +65,7 @@ class CommitsHistoryListCell: UITableViewCell {
     let commitAuthorLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -69,6 +73,7 @@ class CommitsHistoryListCell: UITableViewCell {
     let commitEmailLabel: UILabel = {
         let label = UILabel()
         label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -78,7 +83,15 @@ class CommitsHistoryListCell: UITableViewCell {
         label.lineBreakMode = .byWordWrapping
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
+        
         return label
+    }()
+    
+    lazy var _viewSep: UIView = {
+        let _view = UIView()
+        _view.backgroundColor = .clear
+        _view.translatesAutoresizingMaskIntoConstraints = false
+        return _view
     }()
 
     
@@ -88,11 +101,12 @@ class CommitsHistoryListCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         
-        addSubview(indexLabel)
-        addSubview(commitAuthorLabel)
-        addSubview(commitEmailLabel)
-        addSubview(commitMessageLabel)
-        
+        contentView.addSubview(indexLabel)
+        contentView.addSubview(commitAuthorLabel)
+        contentView.addSubview(commitEmailLabel)
+        contentView.addSubview(commitMessageLabel)
+        contentView.addSubview(_viewSep)
+
         NSLayoutConstraint.activate([
             
             indexLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -100,16 +114,26 @@ class CommitsHistoryListCell: UITableViewCell {
             indexLabel.heightAnchor.constraint(equalToConstant: 36),
             indexLabel.widthAnchor.constraint(equalToConstant: 36),
 
-            commitAuthorLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            commitAuthorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
             commitAuthorLabel.leadingAnchor.constraint(equalTo: indexLabel.trailingAnchor, constant: 20),
+
             commitEmailLabel.topAnchor.constraint(equalTo: commitAuthorLabel.bottomAnchor, constant: 2),
             commitEmailLabel.leadingAnchor.constraint(equalTo: commitAuthorLabel.leadingAnchor),
+            commitEmailLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
+
             commitMessageLabel.topAnchor.constraint(equalTo: commitEmailLabel.bottomAnchor, constant: 2),
             commitMessageLabel.leadingAnchor.constraint(equalTo: commitAuthorLabel.leadingAnchor),
             commitMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            commitMessageLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
+
+            _viewSep.topAnchor.constraint(equalTo: commitMessageLabel.bottomAnchor, constant: 0),
+            _viewSep.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
+            _viewSep.trailingAnchor.constraint(equalTo: commitMessageLabel.trailingAnchor, constant: 0),
+            _viewSep.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor),
+            _viewSep.heightAnchor.constraint(equalToConstant: 10),
 
         ])
-
+        
     }
     
     required init?(coder: NSCoder) {

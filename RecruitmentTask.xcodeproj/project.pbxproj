@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A05458F27FD178000EB7AE2 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A05458E27FD178000EB7AE2 /* UIImageView+Extension.swift */; };
 		8A568D4527FC819F000E44FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D4427FC819F000E44FD /* AppDelegate.swift */; };
 		8A568D4727FC819F000E44FD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A568D4627FC819F000E44FD /* SceneDelegate.swift */; };
 		8A568D4E27FC81A0000E44FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A568D4D27FC81A0000E44FD /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A05458E27FD178000EB7AE2 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		8A568D4127FC819F000E44FD /* RecruitmentTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecruitmentTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A568D4427FC819F000E44FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8A568D4627FC819F000E44FD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				8A568D6827FC8A8B000E44FD /* UIColor+Extension.swift */,
+				8A05458E27FD178000EB7AE2 /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -155,8 +158,8 @@
 			children = (
 				8A568D4F27FC81A0000E44FD /* LaunchScreen.storyboard */,
 				8A568D6B27FC8E8A000E44FD /* RepositoriesListCell.swift */,
-				8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */,
 				8A568D7A27FCCFEC000E44FD /* CommitsHistoryListCell.swift */,
+				8A568D7027FC99B8000E44FD /* CollectionReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				8A568D5E27FC85DF000E44FD /* RepositoriesListCoordinator.swift in Sources */,
 				8A568D7727FCB067000E44FD /* RepositoryDetailsViewController.swift in Sources */,
 				8A568D4727FC819F000E44FD /* SceneDelegate.swift in Sources */,
+				8A05458F27FD178000EB7AE2 /* UIImageView+Extension.swift in Sources */,
 				8A568D6927FC8A8B000E44FD /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,7 +10,7 @@ import UIKit
 
 
 
-protocol Coordinator {
+protocol Coordinator: AnyObject {
     var childCoordinators: [Coordinator] { get }
     func start()
 }
@@ -26,8 +26,8 @@ final class AppCoordinator: Coordinator {
     
     func start() {
         let navigationController = UINavigationController()
-        //TEST
-        let repositoriesListCoordinator = RepositoryDetailsCoordinator(navigationController: navigationController)
+        
+        let repositoriesListCoordinator = RepositoriesListCoordinator(navigationController: navigationController)
         childCoordinators.append(repositoriesListCoordinator)
         repositoriesListCoordinator.start()
         

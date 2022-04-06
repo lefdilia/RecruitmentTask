@@ -9,9 +9,27 @@ import Foundation
 
 final class RepositoryDetailsViewModel {
     
-//    var onLoad: (()->())?
+    var onUpdate: (()->())?
     var coordinator: RepositoryDetailsCoordinator?
     
-//    private var repository: RepositoryModel?
+    var repository: Repositories?
+    var commits: [CommitsHistory]?
+    
+    func fetchCommits(repository: Repositories?) {
+        APIManager.shared.fetchCommits(repository: repository) { [weak self] result in
+            switch result {
+            case .success(let commits):
+                self?.commits = Array(commits.prefix(3))
+                self?.onUpdate?()
+                break
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
+    func didFinish(){
+        coordinator?.didFinish()
+    }
 
 }
