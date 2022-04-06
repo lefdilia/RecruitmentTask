@@ -84,8 +84,6 @@ class RepositoriesListViewController: UIViewController {
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
         ])
         
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapViewHideKeyboard)))
-        
         viewModel.onUpdate = { [weak self] in
             guard let repositories = self?.viewModel.repositories else {
                 return
@@ -95,10 +93,12 @@ class RepositoriesListViewController: UIViewController {
                self?.moreRepos = false
             }
             
+            let _page = self?.page ?? 1
+            
             DispatchQueue.main.async {
                 self?.activityIndicator.stopAnimating()
-                
-                if repositories.count > 100 {
+                                
+                if _page > 1 {
                     self?.repositories.append(contentsOf: repositories)
                 }else{
                     self?.repositories = repositories
@@ -107,10 +107,6 @@ class RepositoriesListViewController: UIViewController {
                 self?.repositoriesListView.reloadData()
             }
         }
-    }
-    
-    @objc private func didTapViewHideKeyboard(){
-        searchController.isActive = false
     }
 }
 
@@ -178,8 +174,7 @@ extension RepositoriesListViewController: UICollectionViewDelegate, UICollection
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        didTapViewHideKeyboard()
-        
+
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
