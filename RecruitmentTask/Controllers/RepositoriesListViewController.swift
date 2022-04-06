@@ -115,7 +115,6 @@ extension RepositoriesListViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        //Clear Collection View
         activityIndicator.stopAnimating()
     }
     
