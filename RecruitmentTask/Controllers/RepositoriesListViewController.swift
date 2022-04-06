@@ -78,12 +78,13 @@ class RepositoriesListViewController: UIViewController {
             repositoriesListView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             repositoriesListView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             repositoriesListView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            repositoriesListView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            repositoriesListView.bottomAnchor.constraint(equalTo: view.keyboardLayoutGuide.topAnchor, constant: -10),
             
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100),
         ])
-
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapViewHideKeyboard)))
         
         viewModel.onUpdate = { [weak self] in
             guard let repositories = self?.viewModel.repositories else {
@@ -107,6 +108,10 @@ class RepositoriesListViewController: UIViewController {
             }
         }
     }
+    
+    @objc private func didTapViewHideKeyboard(){
+        searchController.isActive = false
+    }
 }
 
 
@@ -114,6 +119,12 @@ extension RepositoriesListViewController: UISearchBarDelegate {
         
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         searchBarTimer?.invalidate()
+        
+        if searchText.isEmpty {
+            self.activityIndicator.stopAnimating()
+            return
+        }
+            
         searchBarTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { [weak self] _ in
             self?.activityIndicator.startAnimating()
             self?.viewModel.fetchRepositories(keyword: searchText)
@@ -167,6 +178,7 @@ extension RepositoriesListViewController: UICollectionViewDelegate, UICollection
     }
 
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        didTapViewHideKeyboard()
         
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
